@@ -1,7 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.File;
-import com.udacity.jwdnd.course1.cloudstorage.model.MessageFile;
+import com.udacity.jwdnd.course1.cloudstorage.model.MessageInfo;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -32,23 +32,23 @@ public class FileController {
 
         // check if file is empty
         if (file.isEmpty()) {
-            model.addAttribute("messageFile", new MessageFile("Please select a file to upload.", true));
+            model.addAttribute("messageFile", new MessageInfo("Please select a file to upload.", true));
             return "home";
         }
 
         //check if file already exists
         if (!fileService.isFileAvailable(file.getOriginalFilename())) {
-            model.addAttribute("messageFile", new MessageFile("File already exists.", true));
+            model.addAttribute("messageFile", new MessageInfo("File already exists.", true));
             return "home";
         }
 
         //upload file
         if (fileService.uploadFile(file) >= 0) {
             // return success response
-            model.addAttribute("messageFile", new MessageFile("You successfully uploaded " + file.getOriginalFilename() + '!', false));
+            model.addAttribute("messageFile", new MessageInfo("You successfully uploaded " + file.getOriginalFilename() + '!', false));
         } else {
             // return success response
-            model.addAttribute("messageFile", new MessageFile("Error while uploading file, please try again.", true));
+            model.addAttribute("messageFile", new MessageInfo("Error while uploading file, please try again.", true));
         }
 
         model.addAttribute("files", fileService.getAllFiles());
@@ -70,9 +70,9 @@ public class FileController {
     @GetMapping("/file/delete/{fileId}")
     public String deleteFile(@PathVariable("fileId") Integer fileId, Model model) {
         if (fileService.deleteFile(fileId)) {
-            model.addAttribute("messageFile", new MessageFile("File deleted.", false));
+            model.addAttribute("messageFile", new MessageInfo("File deleted.", false));
         } else {
-            model.addAttribute("messageFile", new MessageFile("Error while deleting file.", true));
+            model.addAttribute("messageFile", new MessageInfo("Error while deleting file.", true));
         }
         model.addAttribute("files", fileService.getAllFiles());
         return "home";
