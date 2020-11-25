@@ -8,12 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface NoteMapper {
-    @Select("SELECT * FROM NOTES WHERE noteid = #{noteId}")
-    Note getNoteById(int noteId);
-
-    @Select("SELECT * FROM NOTES WHERE notetitle = #{noteTitle}")
-    Note getNoteByTitle(String noteTitle);
-
     @Select("SELECT * FROM NOTES")
     List<Note> getAllNotes();
 

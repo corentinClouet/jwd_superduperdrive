@@ -6,6 +6,9 @@ public class NoteForm {
     private String noteTitle;
     private String noteDescription;
 
+    public NoteForm() {
+    }
+
     public Integer getNoteId() {
         return noteId;
     }

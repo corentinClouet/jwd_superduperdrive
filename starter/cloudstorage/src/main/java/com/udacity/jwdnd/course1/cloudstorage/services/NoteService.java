@@ -23,16 +23,6 @@ public class NoteService {
     }
 
     /**
-     * Verify if the note already exists
-     *
-     * @param title note title
-     * @return true if not exists
-     */
-    public boolean alreadyExists(String title) {
-        return noteMapper.getNoteByTitle(title) != null;
-    }
-
-    /**
      * Get all notes
      *
      * @return list of notes
@@ -56,16 +46,6 @@ public class NoteService {
         //update method
         Note note = new Note(noteForm.getNoteId(), noteForm.getNoteTitle(), noteForm.getNoteDescription(), userService.getConnectedUserId());
         return noteMapper.update(note);
-    }
-
-    /**
-     * Get note by id
-     *
-     * @param noteId note id
-     * @return note
-     */
-    public Note get(int noteId) {
-        return noteMapper.getNoteById(noteId);
     }
 
     /**
