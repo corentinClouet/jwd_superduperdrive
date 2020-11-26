@@ -81,7 +81,7 @@
                     Error while managing note.
                 </div>
 
-                <button style="margin: 0.25em;" type="button" class="btn btn-info float-right"
+                <button id="btn-add-note" style="margin: 0.25em;" type="button" class="btn btn-info float-right"
                         onclick="showNoteModal()">
                     + Add a New Note
                 </button>
@@ -97,18 +97,18 @@
                         <tbody>
                         <tr th:each="note : ${notes}">
                             <td>
-                                <button type="button" class="btn btn-success"
+                                <button id="btn-edit-note" type="button" class="btn btn-success"
                                         th:noteId="${note.getNoteId()}"
                                         th:noteTitle="${note.getNoteTitle()}"
                                         th:noteDescription="${note.getNoteDescription()}"
                                         onclick="javascript:showNoteModal(this.getAttribute('noteId'), this.getAttribute('noteTitle'), this.getAttribute('noteDescription'));">
                                     Edit
                                 </button>
-                                <a th:href="@{/note/delete/{noteId} (noteId=${note.noteId})}"
+                                <a id="btn-delete-note" th:href="@{/note/delete/{noteId} (noteId=${note.noteId})}"
                                    class="btn btn-danger">Delete</a>
                             </td>
-                            <th scope="row" th:text="${note.noteTitle}">Example Note Title</th>
-                            <td th:text="${note.noteDescription}">Example Note Description</td>
+                            <th id="note-title" scope="row" th:text="${note.noteTitle}">Example Note Title</th>
+                            <td id="note-description"th:text="${note.noteDescription}">Example Note Description</td>
                         </tr>
                         </tbody>
                     </table>
@@ -130,21 +130,21 @@
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">Title</label>
                                         <input th:field="*{noteTitle}" type="text" name="noteTitle" class="form-control"
-                                               id="note-title"
+                                               id="note-title-input"
                                                maxlength="20" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="note-description" class="col-form-label">Description</label>
                                         <textarea th:field="*{noteDescription}" class="form-control"
-                                                  name="noteDescription" id="note-description"
+                                                  name="noteDescription" id="note-description-input"
                                                   rows="5" maxlength="1000" required></textarea>
                                     </div>
-                                    <button id="noteSubmit" type="submit" class="d-none"></button>
+                                    <button id="note-submit" type="submit" class="d-none"></button>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save
+                                <button id="note-modal-submit" type="button" class="btn btn-primary" onclick="$('#note-submit').click();">Save
                                     changes
                                 </button>
                             </div>
@@ -160,7 +160,7 @@
                     Error while managing note.
                 </div>
 
-                <button style="margin: 0.25em;" type="button" class="btn btn-info float-right"
+                <button id="btn-add-credential" style="margin: 0.25em;" type="button" class="btn btn-info float-right"
                         onclick="showCredentialModal()">
                     + Add a New Credential
                 </button>
@@ -178,16 +178,16 @@
                         <tbody>
                         <tr th:each="credential : ${credentials}">
                             <td>
-                                <button type="button" class="btn btn-success"
+                                <button id="btn-edit-credential" type="button" class="btn btn-success"
                                         th:onclick="javascript:showCredentialModal([[${credential.credentialId}]],[[${credential.url}]],[[${credential.username}]],[[${encryptionService.decryptValue(credential.password, credential.key)}]])">
                                     Edit
                                 </button>
-                                <a th:href="@{/credential/delete/{credentialId} (credentialId=${credential.credentialId})}"
+                                <a id="btn-delete-credential" th:href="@{/credential/delete/{credentialId} (credentialId=${credential.credentialId})}"
                                    class="btn btn-danger">Delete</a>
                             </td>
-                            <th th:text="${credential.url}" scope="row">Example Credential URL</th>
-                            <td th:text="${credential.username}">Example Credential Username</td>
-                            <td th:text="${credential.password}">Example Credential Password</td>
+                            <th id="credential-url" th:text="${credential.url}" scope="row">Example Credential URL</th>
+                            <td id="credential-username" th:text="${credential.username}">Example Credential Username</td>
+                            <td id="credential-password" th:text="${credential.password}">Example Credential Password</td>
                         </tr>
                         </tbody>
                     </table>
@@ -207,31 +207,31 @@
                                 <form th:object="${credentialForm}" action="#" th:action="@{/credential/add}"
                                       method="POST">
                                     <input th:field="*{credentialId}" type="hidden" name="credentialId"
-                                           id="credential-id">
+                                           id="credential-id-input">
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">URL</label>
                                         <input th:field="*{credentialUrl}" type="text" name="url" class="form-control"
-                                               id="credential-url"
+                                               id="credential-url-input"
                                                maxlength="100" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">Username</label>
                                         <input th:field="*{credentialUsername}" type="text" name="username"
-                                               class="form-control" id="credential-username"
+                                               class="form-control" id="credential-username-input"
                                                maxlength="30" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">Password</label>
                                         <input th:field="*{credentialPassword}" type="text" name="password"
-                                               class="form-control" id="credential-password"
+                                               class="form-control" id="credential-password-input"
                                                maxlength="30" required>
                                     </div>
-                                    <button id="credentialSubmit" type="submit" class="d-none"></button>
+                                    <button id="credential-submit" type="submit" class="d-none"></button>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="$('#credentialSubmit').click();">
+                                <button id="credential-submit-modal" type="button" class="btn btn-primary" onclick="$('#credential-submit').click();">
                                     Save changes
                                 </button>
                             </div>
@@ -252,17 +252,17 @@
             // For opening the note modal
             function showNoteModal(noteId, noteTitle, noteDescription) {
                 $('#note-id').val(noteId ? noteId : '');
-                $('#note-title').val(noteTitle ? noteTitle : '');
-                $('#note-description').val(noteDescription ? noteDescription : '');
+                $('#note-title-input').val(noteTitle ? noteTitle : '');
+                $('#note-description-input').val(noteDescription ? noteDescription : '');
                 $('#noteModal').modal('show');
             }
 
             // For opening the credentials modal
             function showCredentialModal(credentialId, url, username, password) {
-                $('#credential-id').val(credentialId ? credentialId : '');
-                $('#credential-url').val(url ? url : '');
-                $('#credential-username').val(username ? username : '');
-                $('#credential-password').val(password ? password : '');
+                $('#credential-id-input').val(credentialId ? credentialId : '');
+                $('#credential-url-input').val(url ? url : '');
+                $('#credential-username-input').val(username ? username : '');
+                $('#credential-password-input').val(password ? password : '');
                 $('#credentialModal').modal('show');
             }
 
