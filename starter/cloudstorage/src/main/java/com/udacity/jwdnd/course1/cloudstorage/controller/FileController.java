@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.core.io.ByteArrayResource;
@@ -23,11 +24,13 @@ public class FileController {
     private final FileService fileService;
     private final NoteService noteService;
     private final CredentialService credentialService;
+    private final EncryptionService encryptionService;
 
-    public FileController(FileService fileService, NoteService noteService, CredentialService credentialService) {
+    public FileController(FileService fileService, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService) {
         this.fileService = fileService;
         this.noteService = noteService;
         this.credentialService = credentialService;
+        this.encryptionService = encryptionService;
     }
 
     @PostMapping("/upload")
@@ -65,7 +68,7 @@ public class FileController {
         }
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(file.getContentType())).header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
-                + file.getFileName() + "\"").body(new
+                        + file.getFileName() + "\"").body(new
                         ByteArrayResource(file.getFileData()));
     }
 
@@ -85,6 +88,7 @@ public class FileController {
         model.addAttribute("files", fileService.getAllFiles());
         model.addAttribute("notes", noteService.getAll());
         model.addAttribute("credentials", credentialService.getAll());
+        model.addAttribute("encryptionService", encryptionService);
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("credentialForm", new CredentialForm());
         model.addAttribute("tab", "tabFile");

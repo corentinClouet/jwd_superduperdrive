@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.Note;
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
 import org.springframework.stereotype.Controller;
@@ -24,11 +25,13 @@ public class HomeController {
     private final FileService fileService;
     private final NoteService noteService;
     private final CredentialService credentialService;
+    private final EncryptionService encryptionService;
 
-    public HomeController(FileService fileService, NoteService noteService, CredentialService credentialService) {
+    public HomeController(FileService fileService, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService) {
         this.fileService = fileService;
         this.noteService = noteService;
         this.credentialService = credentialService;
+        this.encryptionService = encryptionService;
     }
 
     @GetMapping
@@ -44,6 +47,7 @@ public class HomeController {
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("credentialForm", new CredentialForm());
         model.addAttribute("tab", "tabFile");
+        model.addAttribute("encryptionService", encryptionService);
     }
 
 }

@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.*;
-import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
-import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
-import com.udacity.jwdnd.course1.cloudstorage.services.NoteService;
-import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +15,13 @@ public class NoteController {
     private final FileService fileService;
     private final NoteService noteService;
     private final CredentialService credentialService;
+    private final EncryptionService encryptionService;
 
-    public NoteController(FileService fileService, NoteService noteService, CredentialService credentialService) {
+    public NoteController(FileService fileService, NoteService noteService, CredentialService credentialService, EncryptionService encryptionService) {
         this.fileService = fileService;
         this.noteService = noteService;
         this.credentialService = credentialService;
+        this.encryptionService = encryptionService;
     }
 
     @PostMapping("/add")
@@ -53,6 +52,7 @@ public class NoteController {
         model.addAttribute("files", fileService.getAllFiles());
         model.addAttribute("notes", noteService.getAll());
         model.addAttribute("credentials", credentialService.getAll());
+        model.addAttribute("encryptionService", encryptionService);
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("credentialForm", new CredentialForm());
         model.addAttribute("tab", "tabNote");
