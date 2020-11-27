@@ -33,7 +33,7 @@ public class CredentialService {
      * @return list of credentials
      */
     public List<Credential> getAll() {
-        return credentialMapper.getAllCredentials();
+        return credentialMapper.getAllCredentials(userService.getConnectedUserId());
     }
 
     /**

@@ -28,7 +28,7 @@ public class NoteService {
      * @return list of notes
      */
     public List<Note> getAll() {
-        return noteMapper.getAllNotes();
+        return noteMapper.getAllNotes(userService.getConnectedUserId());
     }
 
     /**
