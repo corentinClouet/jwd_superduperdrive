@@ -71,7 +71,7 @@ public class FileService {
      * @return list of upload files
      */
     public List<File> getAllFiles() {
-        return fileMapper.getAllFiles();
+        return fileMapper.getAllFiles(userService.getConnectedUserId());
     }
 
     /**
